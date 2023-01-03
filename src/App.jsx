@@ -18,22 +18,28 @@ import PersistLogin from './features/auth/PersistLogin'
 
 
 function App() {
+
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        {/* public routes */}
-        <Route index element={<Public />} />
-        <Route path="login" element={<Login />} />
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          {/* public routes */}
+          <Route index element={<Public />} />
+          <Route path="login" element={<Login />} />
 
-        {/* Protected Routes */}
-        <Route path="dash" element={<DashLayout />}>
+          {/* Protected Routes */}
+          <Route element={<PersistLogin />}>
 
-          <Route index element={<Welcome />} />
+            <Route path="dash" element={<DashLayout />}>
+
+              <Route index element={<Welcome />} />
 
 
-        </Route>{/* End Dash */}
-      </Route>{/* End Protected Routes */}
-    </Routes >
+            </Route>{/* End Dash */}
+          </Route>
+        </Route>{/* End Protected Routes */}
+      </Routes >
+    </div>
   );
 }
 

@@ -1,6 +1,10 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import useAuth from "../hooks/useAuth"
+import { ButtonComponent } from '@syncfusion/ej2-react-buttons'
+import { enableRipple } from '@syncfusion/ej2-base';
+import { Box } from '@mui/material';
 
+enableRipple(true);
 const DashFooter = () => {
 
     const { username, status } = useAuth()
@@ -11,24 +15,25 @@ const DashFooter = () => {
     const onGoHomeClicked = () => navigate('/dash')
 
     let goHomeButton = null
-    if (pathname !== '/dash') {
+    if (pathname == '/dash') {
         goHomeButton = (
             <button
                 className="dash-footer__button icon-button"
                 title="Home"
                 onClick={onGoHomeClicked}
             >
-                <span className="e-icons e-home"></span>
+                Home
+                <span className="material home"></span>
             </button>
         )
     }
 
     const content = (
-        <footer className="dash-footer">
+        <Box>
             {goHomeButton}
             <p>Current User: {username}</p>
             <p>Status: {status}</p>
-        </footer>
+        </Box>
     )
     return content
 }

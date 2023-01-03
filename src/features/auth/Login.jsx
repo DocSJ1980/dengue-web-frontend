@@ -32,7 +32,8 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const { accessToken } = await login({ username, password }).unwrap()
+            const email = username + "@dharawalpindi.tk"
+            const { accessToken } = await login({ email, password }).unwrap()
             dispatch(setCredentials({ accessToken }))
             setUsername('')
             setPassword('')
