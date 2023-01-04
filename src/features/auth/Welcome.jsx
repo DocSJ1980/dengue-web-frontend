@@ -11,8 +11,17 @@ import UpdateProfile from '../../components/updateProfile'
 import { useSelector } from 'react-redux'
 import { selectComponent } from "./authSlice"
 import { Box, Stack } from '@mui/material'
+import { useGetMyUCMutation } from './authApiSlice'
+import { useEffect } from 'react'
 
 const Welcome = () => {
+    const [getMyUC, myUCInfo] = useGetMyUCMutation()
+    useEffect(() => {
+        const getMyUCRequest = async () => {
+            await getMyUC()
+        }
+        getMyUCRequest()
+    }, [])
     const component = useSelector(selectComponent)
     const { username } = useAuth()
 

@@ -5,7 +5,8 @@ const authSlice = createSlice({
     initialState: {
         token: null,
         mode: 'light',
-        component: 'feed'
+        component: 'feed',
+        myUC: {}
     },
     reducers: {
         setCredentials: (state, action) => {
@@ -20,18 +21,24 @@ const authSlice = createSlice({
             const { component } = action.payload
             state.component = component
         },
+        setMyUC: (state, action) => {
+            const { myUC } = action.payload
+            state.myUC = myUC
+        },
         logOut: (state, action) => {
             state.token = null
             state.mode = 'light'
             state.component = 'feed'
+            state.myUC = {}
         },
     }
 })
 
-export const { setCredentials, setMode, setComponent, logOut } = authSlice.actions
+export const { setCredentials, setMode, setComponent, logOut, setMyUC } = authSlice.actions
 
 export default authSlice.reducer
 
 export const selectCurrentToken = (state) => state.auth.token
 export const selectMode = (state) => state.auth.mode
 export const selectComponent = (state) => state.auth.component
+export const selectMyUC = (state) => state.auth.myUC

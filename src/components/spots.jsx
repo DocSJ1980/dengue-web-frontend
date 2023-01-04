@@ -1,10 +1,13 @@
 import { Box, Button, Grid, MenuItem, Paper, TextField, Typography, } from '@mui/material'
 import React, { useEffect } from 'react'
 // import CameraButton from './camera'
-// import { useGetMyUCsMutation } from '../services/authApi'
 // import CurrentLocation from './currentLocation'
+import { useSelector } from 'react-redux'
+import { selectMyUC } from '../features/auth/authSlice'
 
 const Spots = () => {
+    const myUC = useSelector(selectMyUC)
+    console.log(myUC)
     return (
         <React.Fragment>
             <Box flex={6} p={{ xs: 0, md: 2 }}>
@@ -23,11 +26,11 @@ const Spots = () => {
                         <Grid item xs={12} md={4} >
                             <TextField id="ucList" size={"small"} select fullWidth label="Union Council" value={''}>
                                 <MenuItem key="select" value="">Please Select UC</MenuItem>
-                                {/* {myUCInfo.data?.map((myuc_option) => (
-                                     <MenuItem key={myuc_option._id} value={myuc_option._id}>
-                                         {myuc_option.survUC}
-                                     </MenuItem>
-                                 ))} */}
+                                {myUC?.map((myuc_option) => (
+                                    <MenuItem key={myuc_option._id} value={myuc_option._id}>
+                                        {myuc_option.survUC}
+                                    </MenuItem>
+                                ))}
                             </TextField>
                         </Grid>
                         <Grid item xs={12} md={4} >
