@@ -1,8 +1,19 @@
 import { Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
+import Sidebar from '../../components/Sidebar'
+import Feed from '../../components/Feed'
+import Houses from '../../components/houses'
+import Spots from '../../components/spots'
+import IndoorMonitoring from '../../components/indoorMonitoring'
+import OutdoorMonitoring from '../../components/outdoorMonitoring'
+import Issues from '../../components/issues'
+import UpdateProfile from '../../components/updateProfile'
+import { useSelector } from 'react-redux'
+import { selectComponent } from "./authSlice"
+import { Box, Stack } from '@mui/material'
 
 const Welcome = () => {
-
+    const component = useSelector(selectComponent)
     const { username } = useAuth()
 
     const date = new Date()
@@ -10,15 +21,20 @@ const Welcome = () => {
 
     const content = (
         <section className="welcome">
+            <Box bgcolor={"background.default"} color={"text.primary"} height="100vh">
 
-            <p>{today}</p>
-
-            <h1>Welcome {username}!</h1>
-
-            {/* <p><Link to="/dash/notes">View techNotes</Link></p>
-
-            <p><Link to="/dash/notes/new">Add New techNote</Link></p> */}
-
+                <Stack direction="row" spacing={2} justifyContent="space-between">
+                    <Sidebar />
+                    {component === 'feed' && <Feed />}
+                    {component === 'houses' && <Houses />}
+                    {component === 'spots' && <Spots />}
+                    {component === 'indoor-monitoring' && <IndoorMonitoring />}
+                    {component === 'outdoor-monitoring' && <OutdoorMonitoring />}
+                    {component === 'issues' && <Issues />}
+                    {component === 'profile' && <UpdateProfile />}
+                    {/* <Rightbar /> */}
+                </Stack>
+            </Box>
 
         </section>
     )

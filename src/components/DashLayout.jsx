@@ -23,11 +23,11 @@ const DashLayout = () => {
     return (
         <>
             <ThemeProvider theme={darkTheme} >
-                <Box bgcolor={"primary.default"} color={"text.primary"} fullwidth sx={{ padding: 0, margin: 0 }}>
+                <Box bgcolor={"primary.default"} color={"text.primary"} sx={{ padding: 0, margin: 0 }}>
 
                     <DashHeader />
                     <Outlet />
-                    <DashFooter />
+                    {/* <DashFooter /> */}
                 </Box>
             </ThemeProvider>
 
