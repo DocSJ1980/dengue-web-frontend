@@ -1,18 +1,22 @@
 import { Box, Button, Grid, MenuItem, Paper, TextField, Typography, } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 // import CameraButton from './camera'
 // import CurrentLocation from './currentLocation'
 import { useSelector } from 'react-redux'
 import { selectMyUC } from '../features/auth/authSlice'
+import AddLocationIcon from '@mui/icons-material/AddLocation'
+import useGeoLocation from '../hooks/getLocation'
+import { Stack } from '@mui/system'
+
 
 const Spots = () => {
+    const location = useGeoLocation();
+    console.log(location)
     const myUC = useSelector(selectMyUC)
-    console.log(myUC)
     return (
         <React.Fragment>
             <Box flex={6} p={{ xs: 0, md: 2 }}>
                 <Paper sx={{ paddingBottom: 1, width: "90%", margin: "5px auto", justifyContent: "center", bgcolor: "backgroud.default", color: "text.primary" }}>
-
                     <Typography textAlign={'center'} variant="h4" >
                         Spots
                     </Typography>
@@ -158,6 +162,31 @@ const Spots = () => {
                         <Grid item xs={12} md={8} >
                             <TextField name="address" size={"small"} fullWidth id="address" label="Address" />
                         </Grid>
+                        <Grid item xs={12} md={6} >
+
+                            <Stack direction={"column"} alignContent="center">
+                                {/* <Button size={"small"} variant="contained" disabled={location?.loading} sx={{ margin: 2, }} endIcon={<AddLocationIcon />}>
+                                Get Location
+                            </Button> */}
+                                {location?.loaded === false && <Typography>Loading your location. Please Wait ...</Typography>}
+                                {location?.error && <Typography>{location.error.message}</Typography>}
+                                {location?.coordinates && <Typography>Latitude: {location.coordinates.lat}</Typography>}
+                                {location?.coordinates && <Typography>Longitude: {location.coordinates.lat}</Typography>}
+                                {/* <MapContainer center={[33.626057, 73.071442]} zoom={13} scrollWheelZoom={true}>
+                <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker position={[location.coordinates.lat, location.coordinates.lng]}>
+                <Popup>
+                A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+                </Marker>
+            </MapContainer> */}
+                            </Stack>
+                        </Grid>
+
+                        <Grid item xs={12} md={6} ></Grid>
                         <Grid item xs={2}>
                         </Grid>
                         <Grid item xs={8}>
