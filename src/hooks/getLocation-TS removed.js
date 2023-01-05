@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-let geoId;
-let timeout;
-
-const useGeoLocation = (enabled, accuracyThreshold, accuracyThresholdWaitTime, options) => {
+const useGeoLocation = (
+    enabled,
+    accuracyThreshold,
+    accuracyThresholdWaitTime,
+    options
+) => {
     const [accuracy, setAccuracy] = useState();
     const [location, setLocation] = useState();
     const [error, setError] = useState();
@@ -16,50 +18,46 @@ const useGeoLocation = (enabled, accuracyThreshold, accuracyThresholdWaitTime, o
             return;
         }
         if (navigator.geolocation) {
-            geoId = navigator.geolocation.watchPosition(
+            let timeout
+            const geoId = navigator.geolocation.watchPosition(
                 (position) => {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
                     setAccuracy(position.coords.accuracy);
 
-                    if (
-                        accuracyThreshold == null ||
-                        position.coords.accuracy < accuracyThreshold
-                    ) {
+                    if (accuracyThreshold == null || position.coords.accuracy < accuracyThreshold) {
                         setLocation({ lat, lng });
                     }
                 },
                 (e) => {
                     setError(e.message);
                 },
-                options || {
-                    enableHighAccuracy: true,
-                    maximumAge: 2000,
-                    timeout: 5000,
-                }
+                options ?? { enableHighAccuracy: true, maximumAge: 2000, timeout: 5000 }
             );
             if (accuracyThreshold && accuracyThresholdWaitTime) {
                 timeout = setTimeout(() => {
                     if (!accuracy || accuracy < accuracyThreshold) {
-                        setError("Failed to reach desired accuracy");
+                        setError('Failed to reach desired accuracy');
                     }
                 }, accuracyThresholdWaitTime * 1000);
             }
             return () => {
-                if (geoId) {
-                    window.navigator.geolocation.clearWatch(geoId);
-                    geoId = undefined;
-                }
+                window.navigator.geolocation.clearWatch(geoId);
                 if (timeout) {
                     clearTimeout(timeout);
-                    timeout = undefined;
                 }
             };
         }
 
-        setError("Geolocation API not available");
-    })
+        setError('Geolocation API not available');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [enabled, accuracyThresholdWaitTime, accuracyThreshold, options]);
+
+    if (!enabled) {
+        return [undefined, undefined, undefined];
+    }
+
     return [location, accuracy, error];
-}
+};
 
 export default useGeoLocation;
