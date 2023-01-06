@@ -1,11 +1,7 @@
+import React, { useState } from "react";
 import {
-    AccountBox,
-    Home,
-    ModeNight,
-    Settings,
-} from "@mui/icons-material";
-import {
-    Box,
+    Drawer,
+    IconButton,
     List,
     ListItem,
     ListItemButton,
@@ -13,22 +9,32 @@ import {
     ListItemText,
     Switch,
 } from "@mui/material";
-import React from "react";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useDispatch, useSelector } from "react-redux";
+import { setMode, setComponent, selectMode } from "../features/auth/authSlice"
+import { Home } from "@mui/icons-material";
 import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
 import FactoryIcon from '@mui/icons-material/Factory';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import WomanIcon from '@mui/icons-material/Woman';
 import Man2Icon from '@mui/icons-material/Man2';
-import { setMode, setComponent, selectMode } from "../features/auth/authSlice"
-import { useDispatch, useSelector } from "react-redux";
+import SettingsIcon from '@mui/icons-material/Settings';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import ModeNightIcon from '@mui/icons-material/ModeNight';
 
-const Sidebar = () => {
-    const dispatch = useDispatch();
+const DrawerComp = () => {
+    const [openDrawer, setOpenDrawer] = useState(false);
     const mode = useSelector(selectMode)
+    const dispatch = useDispatch();
     let component
+
     return (
-        <Box flex={{ xs: 2, md: 1 }} p={1} bgcolor={"background.default"} color={"text.primary"} sx={{ display: { xs: "none", sm: "block" }, marginRight: 4, bgcolor: "background.default", color: "text.primary" }}>
-            <Box position="fixed">
+        <React.Fragment>
+            <Drawer
+                anchor="left"
+                open={openDrawer}
+                onClose={() => setOpenDrawer(false)}
+            >
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton onClick={e => dispatch(setComponent({ component: "feed" }))}>
@@ -81,7 +87,7 @@ const Sidebar = () => {
                     <ListItem disablePadding>
                         <ListItemButton onClick={e => dispatch(setComponent({ component: "profile" }))}>
                             <ListItemIcon>
-                                <Settings />
+                                <SettingsIcon />
                             </ListItemIcon>
                             <ListItemText primary="Settings" />
                         </ListItemButton>
@@ -89,7 +95,7 @@ const Sidebar = () => {
                     <ListItem disablePadding>
                         <ListItemButton onClick={e => dispatch(setComponent({ component: "profile" }))}>
                             <ListItemIcon>
-                                <AccountBox />
+                                <AccountBoxIcon />
                             </ListItemIcon>
                             <ListItemText primary="Profile" />
                         </ListItemButton>
@@ -97,7 +103,7 @@ const Sidebar = () => {
                     <ListItem disablePadding>
                         <ListItemButton >
                             <ListItemIcon>
-                                <ModeNight />
+                                <ModeNightIcon />
                             </ListItemIcon>
                             {mode === "light" && <Switch
                                 onChange={e => dispatch(setMode({ mode: "dark" }))}
@@ -109,9 +115,15 @@ const Sidebar = () => {
                         </ListItemButton>
                     </ListItem>
                 </List>
-            </Box>
-        </Box>
+            </Drawer>
+            <IconButton
+                sx={{ color: "white", marginLeft: "auto" }}
+                onClick={() => setOpenDrawer(!openDrawer)}
+            >
+                <MenuIcon color="white" />
+            </IconButton>
+        </React.Fragment>
     );
 };
 
-export default Sidebar;
+export default DrawerComp;

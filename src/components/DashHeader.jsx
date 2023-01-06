@@ -7,6 +7,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import LogoutIcon from '@mui/icons-material/Logout';
 import useAuth from '../hooks/useAuth'
+import DrawerComp from './drawer'
 const DASH_REGEX = /^\/dash(\/)?$/
 
 //* Implement NavBar here
@@ -45,10 +46,10 @@ const DashHeader = () => {
                     <Toolbar variant="dense" >
                         {isMatch ? (
                             <>
-                                <Typography sx={{ fontSize: "2rem", paddingLeft: "10%" }}>
+                                <Typography sx={{ fontSize: "2rem", paddingLeft: "2%" }}>
                                     DHA Rawalpindi
                                 </Typography>
-                                {/* <DrawerComp /> */}
+                                <DrawerComp />
                             </>
                         ) : (<>
                             <img style={{ height: 60, width: 60, color: "white" }} src="/src/assets/dharwp-white.svg" alt="District Health Authority Rawalpindi" />

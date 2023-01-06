@@ -19,7 +19,7 @@ import { MapContainer, TileLayer } from 'react-leaflet'
 
 const Spots = () => {
     const [enabled, setEnabled] = useState(false);
-    const [location, accuracy, error] = useGeoLocation(enabled, 10000, 10000, { enableHighAccuracy: true });
+    const [location, accuracy, error] = useGeoLocation(enabled, 10000, 2000, { enableHighAccuracy: true });
 
     const getMyLocation = () => {
 
@@ -32,10 +32,10 @@ const Spots = () => {
         <React.Fragment>
             <Box flex={6} p={{ xs: 0, md: 2 }}>
                 <Paper sx={{ paddingBottom: 1, width: "90%", margin: "5px auto", justifyContent: "center", bgcolor: "backgroud.default", color: "text.primary" }}>
-                    <Typography textAlign={'center'} variant="h4" >
+                    <Typography textAlign={'center'} variant="h4" color="text.primary" >
                         Spots
                     </Typography>
-                    <Typography textAlign={'center'} variant="h6" >
+                    <Typography textAlign={'center'} variant="h6" color="text.primary">
                         Spot Reporting Form
                     </Typography>
                 </Paper>
