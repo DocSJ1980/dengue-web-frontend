@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import Sidebar from '../../components/Sidebar'
 import Feed from '../../components/Feed'
