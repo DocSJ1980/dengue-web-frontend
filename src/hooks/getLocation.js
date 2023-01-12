@@ -18,8 +18,8 @@ const useGeoLocation = (enabled, accuracyThreshold, accuracyThresholdWaitTime, o
         if (navigator.geolocation) {
             geoId = navigator.geolocation.watchPosition(
                 (position) => {
-                    const lat = position.coords.latitude;
-                    const lng = position.coords.longitude;
+                    const lat = position.coords?.latitude
+                    const lng = position.coords?.longitude
                     setAccuracy(position.coords.accuracy);
 
                     if (

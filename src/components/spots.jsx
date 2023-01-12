@@ -19,7 +19,7 @@ import { MapContainer, TileLayer } from 'react-leaflet'
 
 const Spots = () => {
     const [enabled, setEnabled] = useState(false);
-    const [location, accuracy, error] = useGeoLocation(enabled, 10000, 2000, { enableHighAccuracy: true });
+    const [location, accuracy, error] = useGeoLocation(enabled, null, null, { enableHighAccuracy: true });
 
     const getMyLocation = () => {
 

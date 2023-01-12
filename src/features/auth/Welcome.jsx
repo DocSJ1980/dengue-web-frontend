@@ -7,17 +7,24 @@ import IndoorMonitoring from '../../components/indoorMonitoring'
 import OutdoorMonitoring from '../../components/outdoorMonitoring'
 import Issues from '../../components/issues'
 import UpdateProfile from '../../components/updateProfile'
-import { useSelector } from 'react-redux'
-import { selectComponent } from "./authSlice"
+import { useDispatch, useSelector } from 'react-redux'
+import { selectComponent, setMyUC } from "./authSlice"
 import { Box, Stack } from '@mui/material'
 import { useGetMyUCMutation } from './authApiSlice'
 import { useEffect } from 'react'
+import { useLocalStorageGet } from '../../hooks/useLocalStorage'
 
 const Welcome = () => {
+    const myUCLocal = useLocalStorageGet("myUC")
     const [getMyUC, myUCInfo] = useGetMyUCMutation()
+    const dispatch = useDispatch()
     useEffect(() => {
         const getMyUCRequest = async () => {
-            await getMyUC()
+            if (!myUCLocal) {
+                await getMyUC()
+            } else {
+                dispatch(setMyUC(myUCLocal))
+            }
         }
         getMyUCRequest()
     }, [])

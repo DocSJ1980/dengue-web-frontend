@@ -8,10 +8,16 @@ import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import LogoutIcon from '@mui/icons-material/Logout';
 import useAuth from '../hooks/useAuth'
 import DrawerComp from './drawer'
+import { selectMyUC } from '../features/auth/authSlice'
+import { useSelector } from 'react-redux'
+import { useLocalStorage } from '../hooks/useLocalStorage'
+
 const DASH_REGEX = /^\/dash(\/)?$/
 
 //* Implement NavBar here
 const DashHeader = () => {
+    const myUC = useSelector(selectMyUC)
+    useLocalStorage("myUC", myUC)
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down("md"));
     const routes = ["/dengue", "/polio", "/epi", "/irmnch"];
@@ -35,7 +41,13 @@ const DashHeader = () => {
     if (!DASH_REGEX.test(pathname)) {
         dashClass = "dash-header__container--small"
     }
-
+    const logout = async () => {
+        await sendLogout()
+        localStorage.removeItem("mode")
+        localStorage.removeItem("persist")
+        localStorage.removeItem("comp")
+        localStorage.removeItem("myUC")
+    }
     const errClass = isError ? "errmsg" : "offscreen"
     const content = (
         <>
@@ -77,7 +89,7 @@ const DashHeader = () => {
                                 </Typography>
                                 <LoadingButton
                                     color="secondary"
-                                    onClick={sendLogout}
+                                    onClick={logout}
                                     loading={isLoading}
                                     loadingPosition="start"
                                     startIcon={<LogoutIcon />}

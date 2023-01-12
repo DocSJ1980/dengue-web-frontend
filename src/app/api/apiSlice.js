@@ -1,14 +1,17 @@
+// import fs from 'vite-plugin-fs'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials } from '../../features/auth/authSlice'
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://129.153.134.51:5231',
+    // baseUrl: 'https://server.dharawalpindi.tk',
+    baseUrl: '/api/v1',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const accessToken = getState().auth.token
         if (accessToken) {
             headers.set("authorization", `${accessToken}`)
         }
+        headers.set('certificate', import.meta.env.VITE_REACT_APP_SERVER_SSL_CRT)
         return headers
     }
 })

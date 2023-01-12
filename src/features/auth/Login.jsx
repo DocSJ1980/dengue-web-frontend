@@ -34,6 +34,7 @@ const Login = () => {
         try {
             const email = username + "@dharawalpindi.tk"
             const { accessToken } = await login({ email, password }).unwrap()
+            console.log(email, password)
             dispatch(setCredentials({ accessToken }))
             setUsername('')
             setPassword('')

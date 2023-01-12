@@ -4,6 +4,7 @@ import DashFooter from './DashFooter'
 import { useSelector } from 'react-redux';
 import { selectMode } from '../features/auth/authSlice';
 import { Box, createTheme, ThemeProvider } from '@mui/material';
+import Welcome from '../features/auth/Welcome';
 
 
 
@@ -24,13 +25,11 @@ const DashLayout = () => {
         <>
             <ThemeProvider theme={darkTheme} >
                 <Box bgcolor={"primary.default"} color={"text.primary"} sx={{ padding: 0, margin: 0 }}>
-
                     <DashHeader />
-                    <Outlet />
+                    <Welcome />
                     {/* <DashFooter /> */}
                 </Box>
             </ThemeProvider>
-
         </>
     )
 }

@@ -1,92 +1,71 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
 import Public from './components/Public'
 import Login from './features/auth/Login';
 import DashLayout from './components/DashLayout'
 import Welcome from './features/auth/Welcome'
-// import NotesList from './features/notes/NotesList'
-// import UsersList from './features/users/UsersList'
-// import EditUser from './features/users/EditUser'
-// import NewUserForm from './features/users/NewUserForm'
-// import EditNote from './features/notes/EditNote'
-// import NewNote from './features/notes/NewNote'
 //. import Prefetch from './features/auth/Prefetch'
 import PersistLogin from './features/auth/PersistLogin'
-// import RequireAuth from './features/auth/RequireAuth'
-// import { ROLES } from './config/roles'
-
+import usePersist from './hooks/usePersist';
+import { useSelector } from 'react-redux';
+import { selectCurrentToken } from './features/auth/authSlice';
+import { useEffect, useRef, useState } from 'react';
+import { useRefreshMutation } from './features/auth/authApiSlice';
 
 
 function App() {
+  const [persist] = usePersist()
+  const token = useSelector(selectCurrentToken)
+  const effectRan = useRef(false)
+
+  const [trueSuccess, setTrueSuccess] = useState(false)
+
+  const [refresh, {
+    isUninitialized,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  }] = useRefreshMutation()
+
+
+  useEffect(() => {
+
+    if (effectRan.current === true
+      // || process.env.NODE_ENV !== 'development'
+    ) { // React 18 Strict Mode
+
+      console.log('verifying refresh token')
+      const verifyRefreshToken = async () => {
+        try {
+          //const response = 
+          await refresh()
+          console.log('verifying refresh token')
+          //const { accessToken } = response.data
+          setTrueSuccess(true)
+        }
+        catch (err) {
+          console.error(err)
+        }
+      }
+
+      if (!token && persist) verifyRefreshToken()
+    }
+
+    return () => effectRan.current = true
+
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* public routes */}
-          <Route index element={<Public />} />
-          <Route path="login" element={<Login />} />
-
-          {/* Protected Routes */}
-          <Route element={<PersistLogin />}>
-
-            <Route path="dash" element={<DashLayout />}>
-
-              <Route index element={<Welcome />} />
-
-
-            </Route>{/* End Dash */}
-          </Route>
-        </Route>{/* End Protected Routes */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={token != null ? (<Navigate to="/welcome" replace />) : (<Login />)} />
+        <Route path="/welcome" element={token === null ? (<Navigate to="/login" replace />) : (<DashLayout />)} />
       </Routes >
     </div>
   );
 }
 
 export default App;
-
-
-
-
-//* Copied Code
-// function App() {
-//   return (
-//     <Routes>
-//       <Route path="/" element={<Layout />}>
-//         {/* public routes */}
-//         <Route index element={<Public />} />
-//         <Route path="login" element={<Login />} />
-
-//         {/* Protected Routes */}
-//         <Route element={<PersistLogin />}>
-//           <Route element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}>
-//             <Route element={<Prefetch />}>
-//               <Route path="dash" element={<DashLayout />}>
-
-//                 <Route index element={<Welcome />} />
-
-//                 <Route element={<RequireAuth allowedRoles={[ROLES.Manager, ROLES.Admin]} />}>
-//                   <Route path="users">
-//                     <Route index element={<UsersList />} />
-//                     <Route path=":id" element={<EditUser />} />
-//                     <Route path="new" element={<NewUserForm />} />
-//                   </Route>
-//                 </Route>
-
-//                 <Route path="notes">
-//                   <Route index element={<NotesList />} />
-//                   <Route path=":id" element={<EditNote />} />
-//                   <Route path="new" element={<NewNote />} />
-//                 </Route>
-
-//               </Route>{/* End Dash */}
-//             </Route>
-//           </Route>
-//         </Route>{/* End Protected Routes */}
-
-//       </Route>
-//     </Routes >
-//   );
-// }
-
-// export default App;
