@@ -12,19 +12,12 @@ import { selectComponent, setMyUC } from "./authSlice"
 import { Box, Stack } from '@mui/material'
 import { useGetMyUCMutation } from './authApiSlice'
 import { useEffect } from 'react'
-import { useLocalStorageGet } from '../../hooks/useLocalStorage'
 
 const Welcome = () => {
-    const myUCLocal = useLocalStorageGet("myUC")
     const [getMyUC, myUCInfo] = useGetMyUCMutation()
-    const dispatch = useDispatch()
     useEffect(() => {
         const getMyUCRequest = async () => {
-            if (!myUCLocal) {
-                await getMyUC()
-            } else {
-                dispatch(setMyUC(myUCLocal))
-            }
+            await getMyUC()
         }
         getMyUCRequest()
     }, [])

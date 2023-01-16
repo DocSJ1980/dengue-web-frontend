@@ -6,7 +6,7 @@ import { selectMyUC } from '../features/auth/authSlice'
 import AddLocationIcon from '@mui/icons-material/AddLocation'
 import useGeoLocation from '../hooks/getLocation'
 import { Stack } from '@mui/system'
-import { MapContainer, TileLayer } from 'react-leaflet'
+// import { MapContainer, TileLayer } from 'react-leaflet'
 // import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
 
 // mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94ODAiLCJhIjoiY2xjaTBsbTZhNDZiejN3cWszaHZwMDM3ayJ9._9eUwQd3K6wPIS5dK0Ingg';

@@ -16,8 +16,8 @@ const DASH_REGEX = /^\/dash(\/)?$/
 
 //* Implement NavBar here
 const DashHeader = () => {
-    const myUC = useSelector(selectMyUC)
-    useLocalStorage("myUC", myUC)
+    // const myUC = useSelector(selectMyUC)
+    // useLocalStorage("myUC", myUC)
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down("md"));
     const routes = ["/dengue", "/polio", "/epi", "/irmnch"];
@@ -46,7 +46,7 @@ const DashHeader = () => {
         localStorage.removeItem("mode")
         localStorage.removeItem("persist")
         localStorage.removeItem("comp")
-        localStorage.removeItem("myUC")
+        // localStorage.removeItem("myUC")
     }
     const errClass = isError ? "errmsg" : "offscreen"
     const content = (
