@@ -6,6 +6,7 @@ import { selectMyUC } from '../features/auth/authSlice'
 import AddLocationIcon from '@mui/icons-material/AddLocation'
 import useGeoLocation from '../hooks/getLocation'
 import { Stack } from '@mui/system'
+import UcList from './ucList'
 // import { MapContainer, TileLayer } from 'react-leaflet'
 // import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
 
@@ -15,8 +16,6 @@ import { Stack } from '@mui/system'
 //     style: 'mapbox://styles/mapbox/streets-v11'
 // });
 
-
-
 const Spots = () => {
     const [enabled, setEnabled] = useState(false);
     const [location, accuracy, error] = useGeoLocation(enabled, null, null, { enableHighAccuracy: true });
@@ -25,9 +24,6 @@ const Spots = () => {
 
         setEnabled(!enabled);
     };
-    // const location = useGeoLocation();
-    console.log(location)
-    const myUC = useSelector(selectMyUC)
     return (
         <React.Fragment>
             <Box flex={6} p={{ xs: 0, md: 2 }}>
@@ -43,14 +39,7 @@ const Spots = () => {
                 <Paper sx={{ paddingBottom: 1, width: "90%", margin: "5px auto", justifyContent: "center", bgcolor: "backgroud.default", color: "text.primary" }}>
                     <Grid container spacing={{ md: "20px", xs: "5px", sm: "5px", }} sx={{ display: "flex", justifyContent: "flex-start", padding: 1, margin: 1, width: "98%", }}>
                         <Grid item xs={12} md={4} >
-                            <TextField id="ucList" size={"small"} select fullWidth label="Union Council" value={''}>
-                                <MenuItem key="select" value="">Please Select UC</MenuItem>
-                                {myUC?.map((myuc_option) => (
-                                    <MenuItem key={myuc_option._id} value={myuc_option._id}>
-                                        {myuc_option.survUC}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
+                            <UcList />
                         </Grid>
                         <Grid item xs={12} md={4} >
                             <TextField id="spotCategory" size={"small"} select fullWidth label="Spot Category" value={''}>
@@ -178,7 +167,6 @@ const Spots = () => {
                             <TextField name="address" size={"small"} fullWidth id="address" label="Address" />
                         </Grid>
                         <Grid item xs={12} md={6} >
-
                             <Stack direction={"column"} alignContent="center">
                                 <Button size={"small"} variant="contained" sx={{ margin: 2, }} onClick={getMyLocation} endIcon={<AddLocationIcon />}>
                                     Get Location

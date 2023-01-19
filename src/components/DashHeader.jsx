@@ -42,9 +42,9 @@ const DashHeader = () => {
     }
     const logout = async () => {
         await sendLogout()
-        localStorage.removeItem("mode")
+        localStorage.removeItem("lightMode")
         localStorage.removeItem("persist")
-        localStorage.removeItem("comp")
+        localStorage.removeItem("myComp")
         // localStorage.removeItem("myUC")
     }
     const errClass = isError ? "errmsg" : "offscreen"

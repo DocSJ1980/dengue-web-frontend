@@ -12,6 +12,7 @@ import { selectComponent, setMyUC } from "./authSlice"
 import { Box, Stack } from '@mui/material'
 import { useGetMyUCMutation } from './authApiSlice'
 import { useEffect } from 'react'
+import Loading from '../../components/loader'
 
 const Welcome = () => {
     const [getMyUC, myUCInfo] = useGetMyUCMutation()
@@ -46,7 +47,7 @@ const Welcome = () => {
 
         </section>
     )
-
-    return content
+    if (myUCInfo.isLoading) return <Loading />
+    if (myUCInfo.isSuccess) return content
 }
 export default Welcome
