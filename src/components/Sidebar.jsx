@@ -27,20 +27,23 @@ const Sidebar = () => {
     const dispatch = useDispatch();
     const mode = useSelector(selectMode)
     const componentFromState = useSelector(selectComponent)
-    const [persist, setPersist, lightMode, setLightMode] = usePersist()
+    const [persist, setPersist, lightMode, setLightMode, myComp, setMyComp] = usePersist()
     const handleModeChange = () => setLightMode(prev => !prev)
+    const handleCompChange = (component) => setMyComp(component)
     useEffect(() => {
         if (lightMode === true) dispatch(setMode({ mode: "light" }))
         if (lightMode === false) dispatch(setMode({ mode: "dark" }))
     }, [lightMode])
-
+    useEffect(() => {
+        dispatch(setComponent({ component: myComp }))
+    }, [myComp])
     let component
     return (
         <Box flex={{ xs: 2, md: 1 }} p={1} bgcolor={"background.default"} color={"text.primary"} sx={{ display: { xs: "none", sm: "block" }, marginRight: 4, bgcolor: "background.default", color: "text.primary" }}>
             <Box position="fixed">
                 <List>
                     <ListItem disablePadding>
-                        <ListItemButton onClick={e => dispatch(setComponent({ component: "feed" }))}>
+                        <ListItemButton onClick={e => handleCompChange("feed")}>
                             <ListItemIcon>
                                 <Home />
                             </ListItemIcon>
@@ -48,7 +51,7 @@ const Sidebar = () => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton onClick={e => dispatch(setComponent({ component: "houses" }))}>
+                        <ListItemButton onClick={e => handleCompChange("houses")}>
                             <ListItemIcon>
                                 <HolidayVillageIcon />
                             </ListItemIcon>
@@ -56,7 +59,7 @@ const Sidebar = () => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton onClick={e => dispatch(setComponent({ component: "spots" }))}>
+                        <ListItemButton onClick={e => handleCompChange("spots")}>
                             <ListItemIcon>
                                 <FactoryIcon />
                             </ListItemIcon>
@@ -64,7 +67,7 @@ const Sidebar = () => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton onClick={e => dispatch(setComponent({ component: "issues" }))}>
+                        <ListItemButton onClick={e => handleCompChange("issues")}>
                             <ListItemIcon>
                                 <DeleteSweepIcon />
                             </ListItemIcon>
@@ -72,7 +75,7 @@ const Sidebar = () => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton onClick={e => dispatch(setComponent({ component: "indoor-monitoring" }))}>
+                        <ListItemButton onClick={e => handleCompChange("indoor-monitoring")}>
                             <ListItemIcon>
                                 <WomanIcon />
                             </ListItemIcon>
@@ -80,7 +83,7 @@ const Sidebar = () => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton onClick={e => dispatch(setComponent({ component: "outdoor-monitoring" }))}>
+                        <ListItemButton onClick={e => handleCompChange("outdoor-monitoring")}>
                             <ListItemIcon>
                                 <Man2Icon />
                             </ListItemIcon>
@@ -88,7 +91,7 @@ const Sidebar = () => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton onClick={e => dispatch(setComponent({ component: "profile" }))}>
+                        <ListItemButton onClick={e => handleCompChange("profile")}>
                             <ListItemIcon>
                                 <Settings />
                             </ListItemIcon>
@@ -96,7 +99,7 @@ const Sidebar = () => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton onClick={e => dispatch(setComponent({ component: "profile" }))}>
+                        <ListItemButton onClick={e => handleCompChange("profile")}>
                             <ListItemIcon>
                                 <AccountBox />
                             </ListItemIcon>

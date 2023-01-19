@@ -10,7 +10,6 @@ import useAuth from '../hooks/useAuth'
 import DrawerComp from './drawer'
 import { selectMyUC } from '../features/auth/authSlice'
 import { useSelector } from 'react-redux'
-import { useLocalStorage } from '../hooks/useLocalStorage'
 
 const DASH_REGEX = /^\/dash(\/)?$/
 
