@@ -13,7 +13,7 @@ import {
     ListItemText,
     Switch,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
 import FactoryIcon from '@mui/icons-material/Factory';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
@@ -21,14 +21,19 @@ import WomanIcon from '@mui/icons-material/Woman';
 import Man2Icon from '@mui/icons-material/Man2';
 import { setMode, setComponent, selectMode, selectComponent } from "../features/auth/authSlice"
 import { useDispatch, useSelector } from "react-redux";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import usePersist from "../hooks/usePersist";
 
 const Sidebar = () => {
     const dispatch = useDispatch();
     const mode = useSelector(selectMode)
     const componentFromState = useSelector(selectComponent)
-    useLocalStorage("mode", mode)
-    useLocalStorage("comp", componentFromState)
+    const [persist, setPersist, lightMode, setLightMode] = usePersist()
+    const handleModeChange = () => setLightMode(prev => !prev)
+    useEffect(() => {
+        if (lightMode === true) dispatch(setMode({ mode: "light" }))
+        if (lightMode === false) dispatch(setMode({ mode: "dark" }))
+    }, [lightMode])
+
     let component
     return (
         <Box flex={{ xs: 2, md: 1 }} p={1} bgcolor={"background.default"} color={"text.primary"} sx={{ display: { xs: "none", sm: "block" }, marginRight: 4, bgcolor: "background.default", color: "text.primary" }}>
@@ -105,17 +110,13 @@ const Sidebar = () => {
                             </ListItemIcon>
                             {mode === "light" &&
                                 <Switch
-                                    onChange={e => {
-                                        dispatch(setMode({ mode: "dark" }));
-                                    }}
+                                    onChange={handleModeChange}
                                 />
                             }
                             {mode === "dark" &&
                                 <Switch
                                     defaultChecked
-                                    onChange={e => {
-                                        dispatch(setMode({ mode: "light" }));
-                                    }}
+                                    onChange={handleModeChange}
                                 />
                             }
                         </ListItemButton>

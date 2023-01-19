@@ -21,15 +21,19 @@ import Man2Icon from '@mui/icons-material/Man2';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import usePersist from "../hooks/usePersist";
 
 const DrawerComp = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const mode = useSelector(selectMode)
     const componentFromState = useSelector(selectComponent)
     const dispatch = useDispatch();
-    useLocalStorage("mode", mode)
-    useLocalStorage("comp", componentFromState)
+    const [persist, setPersist, lightMode, setLightMode] = usePersist()
+    const handleModeChange = () => setLightMode(prev => !prev)
+    useEffect(() => {
+        if (lightMode === true) dispatch(setMode({ mode: "light" }))
+        if (lightMode === false) dispatch(setMode({ mode: "dark" }))
+    }, [lightMode])
 
 
     let component
@@ -112,17 +116,13 @@ const DrawerComp = () => {
                             </ListItemIcon>
                             {mode === "light" &&
                                 <Switch
-                                    onChange={e => {
-                                        dispatch(setMode({ mode: "dark" }));
-                                    }}
+                                    onChange={handleModeChange}
                                 />
                             }
                             {mode === "dark" &&
                                 <Switch
                                     defaultChecked
-                                    onChange={e => {
-                                        dispatch(setMode({ mode: "light" }));
-                                    }}
+                                    onChange={handleModeChange}
                                 />
                             }
                         </ListItemButton>
