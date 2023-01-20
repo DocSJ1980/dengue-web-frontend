@@ -12,7 +12,7 @@ const Feed = () => {
                     <Grid container spacing="20px" sx={{ display: "flex", justifyContent: "flex-start", padding: 1, margin: 1, width: "98%", }}>
                         <Grid item xs={12} md={12}>
                             <Typography textAlign={'center'} variant="h4" sx={{ color: "#006600" }}>
-                                Update Profile
+                                Activity Feed
                             </Typography>
                         </Grid>
                     </Grid>

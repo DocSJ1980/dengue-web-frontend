@@ -21,19 +21,12 @@ import Man2Icon from '@mui/icons-material/Man2';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
-import usePersist from "../hooks/usePersist";
 
 const DrawerComp = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const mode = useSelector(selectMode)
-    const componentFromState = useSelector(selectComponent)
     const dispatch = useDispatch();
-    const [persist, setPersist, lightMode, setLightMode] = usePersist()
-    const handleModeChange = () => setLightMode(prev => !prev)
-    useEffect(() => {
-        if (lightMode === true) dispatch(setMode({ mode: "light" }))
-        if (lightMode === false) dispatch(setMode({ mode: "dark" }))
-    }, [lightMode])
+    const handleModeChange = (newMode) => dispatch(setMode({ mode: newMode }))
 
 
     let component
@@ -94,7 +87,7 @@ const DrawerComp = () => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton onClick={e => dispatch(setComponent({ component: "profile" }))}>
+                        <ListItemButton onClick={e => dispatch(setComponent({ component: "feed" }))}>
                             <ListItemIcon>
                                 <SettingsIcon />
                             </ListItemIcon>
@@ -102,7 +95,7 @@ const DrawerComp = () => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton onClick={e => dispatch(setComponent({ component: "profile" }))}>
+                        <ListItemButton onClick={e => dispatch(setComponent({ component: "feed" }))}>
                             <ListItemIcon>
                                 <AccountBoxIcon />
                             </ListItemIcon>
@@ -116,13 +109,13 @@ const DrawerComp = () => {
                             </ListItemIcon>
                             {mode === "light" &&
                                 <Switch
-                                    onChange={handleModeChange}
+                                    onChange={() => handleModeChange("dark")}
                                 />
                             }
                             {mode === "dark" &&
                                 <Switch
                                     defaultChecked
-                                    onChange={handleModeChange}
+                                    onChange={() => handleModeChange("light")}
                                 />
                             }
                         </ListItemButton>

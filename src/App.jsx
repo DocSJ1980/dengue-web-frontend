@@ -1,16 +1,15 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Login from './features/auth/Login';
 import DashLayout from './components/DashLayout'
-import usePersist from './hooks/usePersist';
 import { useSelector } from 'react-redux';
-import { selectCurrentToken } from './features/auth/authSlice';
+import { selectCurrentToken, selectPersist } from './features/auth/authSlice';
 import { useEffect, useRef, useState } from 'react';
 import { useRefreshMutation } from './features/auth/authApiSlice';
 import Loading from './components/loader';
 
 
 function App() {
-  const [persist] = usePersist()
+  const persist = useSelector(selectPersist)
   const token = useSelector(selectCurrentToken)
   const effectRan = useRef(false)
 
@@ -34,12 +33,15 @@ function App() {
           console.error(err)
         }
       }
-      if (!token && persist) verifyRefreshToken()
+      if (!token && persist) {
+        console.log('No token running verifyRefreshToken')
+        verifyRefreshToken()
+      }
+      return () => {
+        effectRan.current = true
+      }
     }
 
-    return () => {
-      effectRan.current = true
-    }
   }, [])
 
   let content
