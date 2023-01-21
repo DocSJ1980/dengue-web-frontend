@@ -7,18 +7,11 @@ import AddLocationIcon from '@mui/icons-material/AddLocation'
 import useGeoLocation from '../hooks/getLocation'
 import { Stack } from '@mui/system'
 import UcList from './ucList'
-// import { MapContainer, TileLayer } from 'react-leaflet'
-// import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
-
-// mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94ODAiLCJhIjoiY2xjaTBsbTZhNDZiejN3cWszaHZwMDM3ayJ9._9eUwQd3K6wPIS5dK0Ingg';
-// const mapContainer = new mapboxgl.Map({
-//     container: 'mapContainer',
-//     style: 'mapbox://styles/mapbox/streets-v11'
-// });
+import UserLocationMap from './userLocationMap'
 
 const Spots = () => {
     const [enabled, setEnabled] = useState(false);
-    const [location, accuracy, error] = useGeoLocation(enabled, null, null, { enableHighAccuracy: true });
+    const [location, accuracy, error] = useGeoLocation(enabled, null, null);
 
     const getMyLocation = () => {
 
@@ -167,37 +160,20 @@ const Spots = () => {
                             <TextField name="address" size={"small"} fullWidth id="address" label="Address" />
                         </Grid>
                         <Grid item xs={12} md={6} >
-                            <Stack direction={"column"} alignContent="center">
+                            <Stack direction={"column"} alignContent="center" alignItems="center" justifyContent="center">
                                 <Button size={"small"} variant="contained" sx={{ margin: 2, }} onClick={getMyLocation} endIcon={<AddLocationIcon />}>
                                     Get Location
                                 </Button>
                                 {error && <p>Error: {error}</p>}
                                 {location && (
-                                    <Typography>
-                                        Latitude: {location.lat}, Longitude: {location.lng}, Accuracy:{" "}
-                                        {accuracy}
-                                    </Typography>
-                                )}
-
-                                {/* {location?.loaded === false && <Typography>Loading your location. Please Wait ...</Typography>}
-                                {location?.error && <Typography>{location.error.message}</Typography>}
-                                {location?.coordinates && (
                                     <>
-                                        <Typography>{location.coordinates.lat}</Typography> */}
-                                {/* <div id="mapContainer"></div> */}
-                                {/* <MapContainer center={[33.626057, 73.071442]} zoom={13} scrollWheelZoom={true}>
-                                            <TileLayer
-                                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                            /> */}
-                                {/* <Marker position={[location.coordinates.lat, location.coordinates.lng]}>
-                    <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                    </Marker> */}
-                                {/* </MapContainer>
+                                        <Typography>
+                                            Latitude: {location.lat}, Longitude: {location.lng}, Accuracy:{" "}
+                                            {accuracy}
+                                        </Typography>
+                                        <UserLocationMap location={location} />
                                     </>
-                                )} */}
+                                )}
                             </Stack>
                         </Grid>
 

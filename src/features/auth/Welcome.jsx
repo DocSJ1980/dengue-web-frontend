@@ -30,7 +30,7 @@ const Welcome = () => {
 
     const content = (
         <section className="welcome">
-            <Box bgcolor={"background.default"} color={"text.primary"} height="100vh">
+            <Box bgcolor={"background.default"} color={"text.primary"} height="100%" minHeight="100vh">
 
                 <Stack direction="row" spacing={2} justifyContent="space-between">
                     <Sidebar />

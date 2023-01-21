@@ -18,7 +18,7 @@ const UcList = () => {
         }
     }, [myUC])
     if (dataReceived) {
-        console.log(myUC)
+        // console.log(myUC)
         content = myUC.map((myuc_option) => (
             <MenuItem key={myuc_option._id} value={myuc_option._id}>
                 {myuc_option.survUC}

@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials } from '../../features/auth/authSlice'
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://server.dharawalpindi.tk/api/v1',
+    // baseUrl: 'https://server.dharawalpindi.tk/api/v1',
     // baseUrl: 'https://local.dharawalpindi.tk/api/v1',
-    // baseUrl: '/api/v1',
+    baseUrl: '/api/v1',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const accessToken = getState().auth.token
@@ -17,9 +17,6 @@ const baseQuery = fetchBaseQuery({
 })
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
-    // console.log(args) // request url, method, body
-    // console.log(api) // signal, dispatch, getState()
-    // console.log(extraOptions) //custom like {shout: true}
 
     let result = await baseQuery(args, api, extraOptions)
 
