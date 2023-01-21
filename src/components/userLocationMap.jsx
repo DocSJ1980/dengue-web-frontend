@@ -26,7 +26,7 @@ const UserLocationMap = ({ location }) => {
                     latitude: location.lat,
                     zoom: 14
                 }}
-                style={{ width: "400px", height: "400px", borderRadius: "15px", border: "2px solid green" }}
+                style={{ width: "100%", height: "300px", borderRadius: "15px", border: "2px solid green" }}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
             >
                 <Marker

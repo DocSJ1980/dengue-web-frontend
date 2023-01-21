@@ -8,6 +8,8 @@ import useGeoLocation from '../hooks/getLocation'
 import { Stack } from '@mui/system'
 import UcList from './ucList'
 import UserLocationMap from './userLocationMap'
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import usePicture from './usePicture'
 
 const Spots = () => {
     const [enabled, setEnabled] = useState(false);
@@ -17,6 +19,8 @@ const Spots = () => {
 
         setEnabled(!enabled);
     };
+    const [picture, getMyPicture] = usePicture();
+
     return (
         <React.Fragment>
             <Box flex={6} p={{ xs: 0, md: 2 }}>
@@ -160,24 +164,27 @@ const Spots = () => {
                             <TextField name="address" size={"small"} fullWidth id="address" label="Address" />
                         </Grid>
                         <Grid item xs={12} md={6} >
-                            <Stack direction={"column"} alignContent="center" alignItems="center" justifyContent="center">
+                            <Stack direction={"column"} alignContent="center" alignItems="center" justifyContent="center" >
                                 <Button size={"small"} variant="contained" sx={{ margin: 2, }} onClick={getMyLocation} endIcon={<AddLocationIcon />}>
                                     Get Location
                                 </Button>
                                 {error && <p>Error: {error}</p>}
                                 {location && (
-                                    <>
-                                        <Typography>
-                                            Latitude: {location.lat}, Longitude: {location.lng}, Accuracy:{" "}
-                                            {accuracy}
-                                        </Typography>
-                                        <UserLocationMap location={location} />
-                                    </>
+                                    <UserLocationMap location={location} />
                                 )}
                             </Stack>
                         </Grid>
-
-                        <Grid item xs={12} md={6} ></Grid>
+                        <Grid item xs={12} md={6} >
+                            <Stack direction={"column"} alignContent="center" alignItems="center" justifyContent="center">
+                                <Button size={"small"} variant="contained" sx={{ margin: 2, }}
+                                    onClick={() => document.getElementById("imageInput").click()}
+                                    endIcon={<AddAPhotoIcon />}>
+                                    Take Picture
+                                    <input hidden id="imageInput" capture="camera" accept="image/*" type="file" onChange={getMyPicture} />
+                                </Button>
+                                {picture && <img src={picture} style={{ width: "100%", height: "300px", borderRadius: "15px", border: "2px solid green" }} alt="Taken Picture" />}
+                            </Stack>
+                        </Grid>
                         <Grid item xs={2}>
                         </Grid>
                         <Grid item xs={8}>
