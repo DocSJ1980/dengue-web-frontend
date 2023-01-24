@@ -3,7 +3,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectMyUC } from '../features/auth/authSlice'
 
-const UcList = () => {
+const UcList = (props) => {
+    const onSelect = (value) => {
+        props.onSelect(value);
+    }
+    const uc = props.value;
     const [dataReceived, setDataReceived] = useState(false)
     const effectRan = useRef(false)
     const myUC = useSelector(selectMyUC)
@@ -27,12 +31,10 @@ const UcList = () => {
 
     }
 
-    return (
-        <TextField id="ucList" size={"small"} select fullWidth label="Union Council" value={''}>
-            <MenuItem key="select" value="">Please Select UC</MenuItem>
-            {content}
-        </TextField>
-    )
+    return <TextField id="ucList" size={"small"} select fullWidth label="Union Council" value={uc} onChange={e => onSelect(e.target.value)}>
+        <MenuItem key="select" value="">Please Select UC</MenuItem>
+        {content}
+    </TextField>
 }
 
 export default UcList

@@ -9,7 +9,7 @@ import Map, {
     GeolocateControl,
 } from "react-map-gl";
 const UserLocationMap = ({ location }) => {
-    console.log(location.lat, location.lng)
+    // console.log(location.lat, location.lng)
     const [viewport, setViewport] = useState({
         width: '100%',
         height: '400px',
@@ -27,7 +27,7 @@ const UserLocationMap = ({ location }) => {
                     zoom: 14
                 }}
                 style={{ width: "100%", height: "300px", borderRadius: "15px", border: "2px solid green" }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
+                mapStyle="mapbox://styles/sjtrader17/cld61xan9002i01p4zzswd6h9"
             >
                 <Marker
                     latitude={location.lat}

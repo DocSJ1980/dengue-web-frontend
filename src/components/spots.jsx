@@ -1,6 +1,5 @@
 import { Box, Button, Grid, MenuItem, Paper, TextField, Typography, } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-// import CameraButton from './camera'
 import { useSelector } from 'react-redux'
 import { selectMyUC } from '../features/auth/authSlice'
 import AddLocationIcon from '@mui/icons-material/AddLocation'
@@ -9,7 +8,7 @@ import { Stack } from '@mui/system'
 import UcList from './ucList'
 import UserLocationMap from './userLocationMap'
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import usePicture from './usePicture'
+import usePicture from '../hooks/usePicture'
 
 const Spots = () => {
     const [enabled, setEnabled] = useState(false);
@@ -20,6 +19,17 @@ const Spots = () => {
         setEnabled(!enabled);
     };
     const [picture, getMyPicture] = usePicture();
+    const [uc, setUc] = useState("");
+    const onUcSelect = (value) => {
+        setUc(value);
+    };
+    const [category, setCategory] = useState('');
+    const [spotType, setSpotType] = useState('');
+    const [timeReq, setTimeReq] = useState('');
+    const [spotName, setSpotName] = useState('');
+    const [address, setAddress] = useState('');
+    const [description, setDescription] = useState('');
+    console.log(spotName)
 
     return (
         <React.Fragment>
@@ -32,14 +42,13 @@ const Spots = () => {
                         Spot Reporting Form
                     </Typography>
                 </Paper>
-                {/* <Paper sx={{ padding: 1, minHeight: '50%', width: "90%", margin: "5px auto", justifyContent: "center" }}> */}
                 <Paper sx={{ paddingBottom: 1, width: "90%", margin: "5px auto", justifyContent: "center", bgcolor: "backgroud.default", color: "text.primary" }}>
                     <Grid container spacing={{ md: "20px", xs: "5px", sm: "5px", }} sx={{ display: "flex", justifyContent: "flex-start", padding: 1, margin: 1, width: "98%", }}>
                         <Grid item xs={12} md={4} >
-                            <UcList />
+                            <UcList onSelect={onUcSelect} value={uc} />
                         </Grid>
                         <Grid item xs={12} md={4} >
-                            <TextField id="spotCategory" size={"small"} select fullWidth label="Spot Category" value={''}>
+                            <TextField id="spotCategory" size={"small"} select fullWidth label="Spot Category" value={category} onChange={e => setCategory(e.target.value)}>
                                 <MenuItem key={1} value={"Abandoned Buildings"}>Abandoned Buildings</MenuItem>
                                 <MenuItem key={2} value={"Academy/Tuition Center"}>Academy/Tuition Center</MenuItem>
                                 <MenuItem key={3} value={"Bachelor House"}>Bachelor House</MenuItem>
@@ -120,17 +129,17 @@ const Spots = () => {
                             </TextField>
                         </Grid>
                         <Grid item xs={12} md={4} >
-                            <TextField id="spotType" size={"small"} select fullWidth label="Big Breeding Site" value={''}>
-                                <MenuItem key={1} value={1}>
+                            <TextField id="spotType" size={"small"} select fullWidth label="Big Breeding Site" value={spotType} onChange={e => setSpotType(e.target.value)}>
+                                <MenuItem key={1} value={true}>
                                     Yes
                                 </MenuItem>
-                                <MenuItem key={2} value={2}>
+                                <MenuItem key={2} value={false}>
                                     No
                                 </MenuItem>
                             </TextField>
                         </Grid>
                         <Grid item xs={12} md={4} >
-                            <TextField id="timeReq" size={"small"} select fullWidth label="Time Required" value={''}>
+                            <TextField id="timeReq" size={"small"} select fullWidth label="Time Required" value={timeReq} onChange={e => setTimeReq(e.target.value)}>
                                 <MenuItem key={1} value={"0-5"}>
                                     Less than 2 minutes
                                 </MenuItem>
@@ -152,7 +161,7 @@ const Spots = () => {
                             </TextField>
                         </Grid>
                         <Grid item xs={12} md={4} >
-                            <TextField name="spotName" size={"small"} fullWidth id="spotName" label="Spot Name" />
+                            <TextField name="spotName" size={"small"} fullWidth id="spotName" label="Spot Name" onChange={e => setSpotName(e.target.value)} value={spotName} />
                         </Grid>
                         <Grid item xs={12} md={4} >
                             <TextField name="occupantName" size={"small"} fullWidth id="occupantName" label="Relevant Person (Occupant/Owner)" />
@@ -202,48 +211,5 @@ const Spots = () => {
     )
 }
 
-//     const [getMyUCs, myUCInfo] = useGetMyUCsMutation()
-//     const paperStyle = { minHeight: '50%', width: "100%", marginRight: "auto", maxWidth: "100%", align: "center" }
-//     useEffect(() => {
-//         async function getMyUCDetails() {
-//             await getMyUCs()
-//         }
-//         getMyUCDetails()
-//     }, [])
-
-//     return (
-//         <React.Fragment>
-//             <Box flex={6} p={{ xs: 0, md: 2 }}>
-// <Paper sx={{ paddingBottom: 1, width: "90%", margin: "5px auto", justifyContent: "center", bgcolor: "#006600" }}>
-
-//                     <Typography textAlign={'center'} variant="h4" sx={{ color: "white" }}>
-//                         Spots
-//                     </Typography>
-//                     <Typography textAlign={'center'} variant="h6" sx={{ color: "white" }}>
-//                         Spot Reporting Form
-//                     </Typography>
-//                 </Paper>
-//                         <Grid item xs={12} md={4} >
-//                             <TextField id="spotType" size={"small"} select fullWidth label="Big Breeding Site" value={''}>
-//                                 <MenuItem key={1} value={1}>
-//                                     Yes
-//                                 </MenuItem>
-//                                 <MenuItem key={2} value={2}>
-//                                     No
-//                                 </MenuItem>
-//                             </TextField>
-//                         </Grid>
-
-//                         <Grid item xs={12} md={6} sx={{ justifyContent: "center", padding: 1, margin: 1, }}>
-//                             <CameraButton />
-//                         </Grid>
-//                         <Grid item xs={12} md={5.7} sx={{ justifyContent: "right", }}>
-//                             <CurrentLocation />
-//                         </Grid>
-//                 </Paper>
-//             </Box>
-//         </React.Fragment>
-//     )
-// }
 
 export default Spots
