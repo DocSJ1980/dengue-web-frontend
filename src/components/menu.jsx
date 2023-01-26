@@ -18,6 +18,7 @@ import Man2Icon from '@mui/icons-material/Man2';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
+import EngineeringIcon from '@mui/icons-material/Engineering';
 
 const Menu = () => {
     const mode = useSelector(selectMode)
@@ -72,6 +73,14 @@ const Menu = () => {
                         <Man2Icon />
                     </ListItemIcon>
                     <ListItemText primary="Outdoor Monitoring" />
+                </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+                <ListItemButton onClick={e => dispatch(setComponent({ component: "ucMgmt" }))}>
+                    <ListItemIcon>
+                        <EngineeringIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="UC Management" />
                 </ListItemButton>
             </ListItem>
             <ListItem disablePadding>

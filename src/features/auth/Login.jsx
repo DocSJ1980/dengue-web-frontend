@@ -52,8 +52,12 @@ const Login = () => {
 
     const handleUserInput = (e) => setUsername(e.target.value)
     const handlePwdInput = (e) => setPassword(e.target.value)
-    const handleToggle = () => dispatch(setPersist(prev => !prev))
+    const [persistLocal, setPersistLocal] = useState(useSelector(selectPersist))
 
+    const handleToggle = () => {
+        setPersistLocal(prev => !prev)
+        dispatch(setPersist({ persist: persistLocal }))
+    }
     const errClass = errMsg ? "errmsg" : "offscreen"
 
     if (isLoading) return <Loading />

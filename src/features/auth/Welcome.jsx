@@ -13,6 +13,7 @@ import { Box, Stack } from '@mui/material'
 import { useGetMyUCMutation } from './authApiSlice'
 import { useEffect } from 'react'
 import Loading from '../../components/loader'
+import UcMgmt from '../../components/ucMgmt'
 
 const Welcome = () => {
     const [getMyUC, myUCInfo] = useGetMyUCMutation()
@@ -40,6 +41,7 @@ const Welcome = () => {
                     {component === 'indoor-monitoring' && <IndoorMonitoring />}
                     {component === 'outdoor-monitoring' && <OutdoorMonitoring />}
                     {component === 'issues' && <Issues />}
+                    {component === 'ucMgmt' && <UcMgmt />}
                     {component === 'profile' && <UpdateProfile />}
                     {/* <Rightbar /> */}
                 </Stack>
